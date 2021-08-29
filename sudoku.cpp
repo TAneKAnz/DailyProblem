@@ -32,11 +32,29 @@ int main(){
     }
     cout<<'\n';
   }
-  
 }
 
 bool foo(int i,int j){
-  
+  FOR(k,1,10){
+    if(complete) return 0;
+    t[i][j] = k;
+    if(validate(i,j)){
+      bool ck = true;
+      FOR(y,0,9){
+        FOR(x,0,9){
+          if(t[y][x] == 0){
+            ck = false;
+            foo(y,x);
+            break;
+          }
+        }
+        if(!ck) break;
+      }
+      if(ck) complete = true;
+    }
+  }
+  if(!complete) t[i][j] = 0;
+  return false;
 }
 
 bool validate(int x,int y){
@@ -44,7 +62,6 @@ bool validate(int x,int y){
     {
       if (t[x][j]==t[x][y] && j != y)
       {
-        cout<<"invalid\n";
         return false;
       }
     }
@@ -52,7 +69,6 @@ bool validate(int x,int y){
     {
       if (t[i][y]==t[x][y] && i != x)
       {
-        cout<<"invalid\n";
         return false;
       }
     }
@@ -64,20 +80,18 @@ bool validate(int x,int y){
         {
           if (t[k][p]==t[x][y] && (x!=k && y!=p))
           {
-            cout<<"invalid\n";
             return false;
           }
         }
       }
     }
-    cout<<"validated\n";
     return true;
 }
 
 /*
 9 1 0 7 0 0 0 0 0
 0 3 2 6 0 9 0 8 0
-0 0 7 0 8 0 9 9 9
+0 0 7 0 8 0 9 0 0
 0 8 6 0 3 0 1 7 0
 3 0 0 0 0 0 0 0 6
 0 5 1 0 2 0 8 4 0
